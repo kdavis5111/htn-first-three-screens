@@ -14,41 +14,28 @@
 
   <main class="hero">
     <div class="demo" aria-hidden="true">
-      <div class="screen">
-        <div class="chips">
-          <span class="chip pick p1">World</span><span class="chip">Politics</span><span class="chip pick p1">Tech</span><span class="chip">Sports</span>
-        </div>
-        <div class="chips time">
-          <span class="chip">5 min</span><span class="chip pick p2">10 min</span><span class="chip">All</span>
-        </div>
-        <div class="rows">
-          <div class="row"><span class="tag">World</span><span class="hl">Ceasefire talks resume</span><span class="ok">3 sources ✓</span></div>
-          <div class="row d1"><span class="tag">Politics</span><span class="hl">House passes spending bill</span></div>
-          <div class="row"><span class="tag">Tech</span><span class="hl">Chipmaker unveils 2nm</span><span class="ok">4 sources ✓</span></div>
-          <div class="row d1"><span class="tag">Sports</span><span class="hl">Cup final goes to extra time</span></div>
-          <div class="row"><span class="tag">World</span><span class="hl">Japan quake; no tsunami</span><span class="ok">5 sources ✓</span></div>
-          <div class="row d2"><span class="tag">Tech</span><span class="hl">EU fines app store operator</span></div>
-          <div class="row d1"><span class="tag">Politics</span><span class="hl">Governor signs ballot measure</span></div>
-          <div class="row d2"><span class="tag">Tech</span><span class="hl">Satellite launch scrubbed</span></div>
-          <div class="row d1"><span class="tag">Sports</span><span class="hl">Marathon record falls in Berlin</span></div>
-        </div>
-        <div class="stamp">Done ✓</div>
-      </div>
-      <div class="caps">
-        <span class="cap c1">Pick your topics</span>
-        <span class="cap c2">Pick your time</span>
-        <span class="cap c3">Checked against 3+ sources</span>
-        <span class="cap c4">Then you're done</span>
-      </div>
+      <div class="screen mode-headlines" id="demoScreen"></div>
+      <div class="caps" id="demoCap"></div>
     </div>
 
-    <h1>Your news, sized to your morning. <em>Then you're done.</em></h1>
+    <h1>Just what happened. <em>Every fact labeled, every source named.</em></h1>
 
     <div class="actions">
       <a class="btn btn-primary" href="topics.html">Pick my topics</a>
-      <a class="btn btn-link" href="brief.html">Skip to today's news</a>
+      <a class="btn btn-link" href="style.html">Skip to today's news</a>
     </div>
   </main>
 </div>
+<script src="story.js"></script>
+<script>
+const screen = document.getElementById("demoScreen"), cap = document.getElementById("demoCap");
+screen.innerHTML = STORY_HTML;
+const PHASES = [["headlines","<b>Headlines</b> only"],["compact","<b>Compact</b> · why it matters"],["detailed scroll-1","<b>Detailed</b> · every fact labeled"],["detailed scroll-2","Every source <b>named</b>"]];
+let i = 0;
+function show(){ const [m,c] = PHASES[i]; screen.className = "screen mode-"+m; cap.innerHTML = c; i = (i+1) % PHASES.length; }
+show();
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(show, 2600);
+else { screen.className = "screen mode-detailed scroll-1"; cap.innerHTML = "Every fact labeled, every source named"; }
+</script>
 </body>
 </html>

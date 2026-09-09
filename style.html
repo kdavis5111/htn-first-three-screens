@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HeresThe.News — Your style</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="masthead">
+    <a class="back" href="index.html" aria-label="Back to start">&#8592;</a>
+    <a class="brand" href="index.html">HeresThe.<em>News</em></a>
+  </header>
+  <div class="progress" aria-label="Step 2 of 2"><span style="width:100%"></span></div>
+
+  <h1>How do you want your news to look?</h1>
+
+  <div id="example" class="mode-compact"></div>
+
+  <div class="picker">
+    <div class="seg" id="seg">
+      <label><input type="radio" name="mode" value="headlines">Headlines<small>Just the news</small></label>
+      <label class="on"><input type="radio" name="mode" value="compact" checked>Compact<small>+ why it matters</small></label>
+      <label><input type="radio" name="mode" value="detailed">Detailed<small>+ facts & sources</small></label>
+    </div>
+    <a class="btn btn-primary" href="https://heresthe.news" id="finish">Show my paper</a>
+    <p class="muted" style="margin:8px 0 0">Saved on this device. Change anytime.</p>
+  </div>
+</div>
+<script src="story.js"></script>
+<script>
+const ex = document.getElementById("example"), seg = document.getElementById("seg");
+ex.innerHTML = STORY_HTML;
+const saved = localStorage.getItem("htn.style");
+if (saved) { const r = seg.querySelector(`input[value="${saved}"]`); if (r) r.checked = true; }
+function apply(){
+  const m = seg.querySelector("input:checked").value;
+  ex.className = "mode-"+m;
+  seg.querySelectorAll("label").forEach(l => l.classList.toggle("on", l.querySelector("input").checked));
+  localStorage.setItem("htn.style", m);
+}
+seg.addEventListener("change", apply);
+apply();
+</script>
+</body>
+</html>

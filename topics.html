@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HeresThe.News — Topics</title>
+<title>HeresThe.News — Your topics</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -28,13 +28,13 @@
   </header>
   <div class="progress" aria-label="Step 1 of 2"><span style="width:50%"></span></div>
 
-  <h1>I want to read about…</h1>
+  <h1>What news do you want to see?</h1>
 
   <form id="topicsForm">
     <ul class="topics" id="topicList"></ul>
     <div class="sticky">
-      <button class="btn btn-primary" id="continueBtn" type="submit" disabled>Continue</button>
-      <p class="muted" style="margin:8px 0 0">Saved on this device. Change anytime.</p>
+      <button class="btn btn-primary" id="continueBtn" type="submit" disabled>Next</button>
+      <button class="btn btn-link" id="allBtn" type="button">Show me everything</button>
     </div>
   </form>
 </div>
@@ -55,15 +55,19 @@ const btn = document.getElementById("continueBtn");
 function refresh(){
   const n = list.querySelectorAll("input:checked").length;
   btn.disabled = n === 0;
-  btn.textContent = n === 0 ? "Pick at least one" : "Continue";
+  btn.textContent = n === 0 ? "Pick at least one" : "Next";
 }
 list.addEventListener("change", refresh);
 refresh();
 
+document.getElementById("allBtn").addEventListener("click", () => {
+  list.querySelectorAll("input").forEach(i => i.checked = true); refresh();
+  document.getElementById("topicsForm").requestSubmit();
+});
 document.getElementById("topicsForm").addEventListener("submit", e => {
   e.preventDefault();
   localStorage.setItem("htn.topics", JSON.stringify([...list.querySelectorAll("input:checked")].map(i => i.value)));
-  location.href = "brief.html";
+  location.href = "style.html";
 });
 </script>
 </body>
