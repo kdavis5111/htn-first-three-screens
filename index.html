@@ -3,31 +3,37 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HeresThe.News — Start</title>
+<title>HeresThe.News</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="app">
   <header class="masthead">
-    <a class="brand" href="index.html">HeresThe.<em>News</em><small>No ads. No bait. Just news.</small></a>
+    <a class="brand" href="index.html">HeresThe.<em>News</em></a>
   </header>
 
   <main class="hero">
-    <p class="eyebrow">Your morning brief</p>
-    <h1>Today's news, sized to your morning. Every story checked against <span class="hl">multiple sources</span>. Then you're done.</h1>
-    <p class="lede">Pick your topics and how much time you have. You get one brief, with a clear end.</p>
+    <div class="demo" aria-hidden="true">
+      <div class="chips"><span class="chip pick">World</span><span class="chip">Politics</span><span class="chip pick">Tech</span><span class="chip">Sports</span></div>
+      <div class="row"><span class="bar"></span><span class="ok">✓ 4 sources</span></div>
+      <div class="row drop"><span class="bar s"></span></div>
+      <div class="row"><span class="bar s"></span><span class="ok">✓ 3 sources</span></div>
+      <div class="row drop"><span class="bar"></span></div>
+      <div class="row drop"><span class="bar s"></span></div>
+      <div class="row"><span class="bar"></span><span class="ok">✓ 3 sources</span></div>
+      <div class="row drop"><span class="bar"></span></div>
+      <div class="row"><span class="bar s"></span><span class="ok">✓ 5 sources</span></div>
+      <div class="row drop"><span class="bar"></span></div>
+      <span class="done">Done ✓</span>
+    </div>
+
+    <h1>Your news, sized to your morning. <em>Then you're done.</em></h1>
 
     <div class="actions">
       <a class="btn btn-primary" href="topics.html">Build my brief</a>
-      <a class="btn btn-link" href="brief.html">I've been here before — take me to today's news</a>
-    </div>
-
-    <div class="reassure">
-      <span>No ads</span><span>No account</span><span>No tracking</span>
+      <a class="btn btn-link" href="brief.html">I've been here before</a>
     </div>
   </main>
-
-  <p class="muted" style="text-align:center">Published every morning at 4:00 AM Mountain.</p>
 </div>
 </body>
 </html>
