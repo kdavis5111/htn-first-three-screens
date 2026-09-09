@@ -46,8 +46,8 @@ p{margin:0 0 14px;color:var(--ink-2)}
 .demo{width:290px;text-align:left}
 .demo .screen{position:relative;height:250px;padding:12px 12px 0;border:1px solid var(--line);border-radius:16px;background:var(--card);overflow:hidden}
 .demo .story-card{font-size:.72rem;border:0;padding:0;margin:0;background:none;transition:transform 1.1s ease}
-.demo .scroll-1 .story-card{transform:translateY(-215px)}
-.demo .scroll-2 .story-card{transform:translateY(-395px)}
+.demo .scroll-1 .story-card{transform:translateY(-240px)}
+.demo .scroll-2 .story-card{transform:translateY(-675px)}
 .demo .story-card .headline{font-size:.9rem}
 .demo .story-card .impact,.demo .story-card .fact-text{font-size:.66rem}
 .demo .story-card .corr{font-size:.58rem}
@@ -97,11 +97,15 @@ p{margin:0 0 14px;color:var(--ink-2)}
 .fact{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:start;padding:8px 0;border-top:1px solid var(--line)}
 .fact .fact-text{font-size:.9rem;color:var(--ink)}
 .fact .corr{display:block;font-size:.78rem;color:var(--ink-3);margin-top:4px}
-.coverage{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--green);text-decoration:none;padding:10px 0 8px}
+.srcs-head{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:12px 0 6px}
+.source-links{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.source-links .src{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:.8rem}
+.source-links a{color:var(--ink);text-decoration:none}
+.lean-tag{font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
 
 /* reading styles: what each one shows */
-.mode-headlines .update-note,.mode-headlines .impact-wrap,.mode-headlines .facts-head,.mode-headlines .facts,.mode-headlines .coverage{display:none}
-.mode-compact .update-note,.mode-compact .facts-head,.mode-compact .facts,.mode-compact .coverage{display:none}
+.mode-headlines .update-note,.mode-headlines .impact-wrap,.mode-headlines .facts-head,.mode-headlines .facts,.mode-headlines .srcs-head,.mode-headlines .source-links{display:none}
+.mode-compact .update-note,.mode-compact .facts-head,.mode-compact .facts,.mode-compact .srcs-head,.mode-compact .source-links{display:none}
 .mode-headlines .story-card,.mode-compact .story-card{padding-bottom:10px}
 
 /* ---------- style picker ---------- */
