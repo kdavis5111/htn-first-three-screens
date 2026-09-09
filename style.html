@@ -14,18 +14,20 @@
   </header>
   <div class="progress" aria-label="Step 2 of 2"><span style="width:100%"></span></div>
 
-  <h1>How do you want your news to look?</h1>
+  <h1>Pick your style</h1>
 
+  <div class="choices" id="seg">
+    <label class="choice"><input type="radio" name="mode" value="headlines"><span class="t">Headlines</span><span class="d">Just the news</span><span class="tick">✓</span></label>
+    <label class="choice on"><input type="radio" name="mode" value="compact" checked><span class="t">Compact</span><span class="d">+ why it matters</span><span class="tick">✓</span></label>
+    <label class="choice"><input type="radio" name="mode" value="detailed"><span class="t">Detailed</span><span class="d">+ facts &amp; sources</span><span class="tick">✓</span></label>
+  </div>
+  <p class="note"><span class="dot"></span>You can always change your style later.</p>
+
+  <p class="eyebrow">Preview</p>
   <div id="example" class="mode-compact"></div>
 
   <div class="picker">
-    <div class="seg" id="seg">
-      <label><input type="radio" name="mode" value="headlines">Headlines<small>Just the news</small></label>
-      <label class="on"><input type="radio" name="mode" value="compact" checked>Compact<small>+ why it matters</small></label>
-      <label><input type="radio" name="mode" value="detailed">Detailed<small>+ facts & sources</small></label>
-    </div>
     <a class="btn btn-primary" href="https://heresthe.news" id="finish">Show my paper</a>
-    <p class="muted" style="margin:8px 0 0">Saved on this device. Change anytime.</p>
   </div>
 </div>
 <script src="story.js"></script>
@@ -37,7 +39,7 @@ if (saved) { const r = seg.querySelector(`input[value="${saved}"]`); if (r) r.ch
 function apply(){
   const m = seg.querySelector("input:checked").value;
   ex.className = "mode-"+m;
-  seg.querySelectorAll("label").forEach(l => l.classList.toggle("on", l.querySelector("input").checked));
+  seg.querySelectorAll(".choice").forEach(l => l.classList.toggle("on", l.querySelector("input").checked));
   localStorage.setItem("htn.style", m);
 }
 seg.addEventListener("change", apply);
