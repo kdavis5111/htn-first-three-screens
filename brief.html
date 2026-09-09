@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HeresThe.News — Your brief</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="masthead">
+    <a class="back" href="index.html" aria-label="Back to start">&#8592;</a>
+    <a class="brand" href="index.html">HeresThe.<em>News</em></a>
+  </header>
+  <div class="progress" aria-label="Step 2 of 2"><span style="width:100%"></span></div>
+
+  <p class="eyebrow">Step 2 of 2 · Wednesday, September 9</p>
+  <h1>How much time do you have?</h1>
+
+  <div class="options" id="options">
+    <label class="opt"><input type="radio" name="size" value="1"><span><span class="t">Headlines</span><span class="d">The top story in each topic</span></span><span class="cost" data-cost>~3 min</span></label>
+    <label class="opt on"><input type="radio" name="size" value="2" checked><span><span class="t">Standard</span><span class="d">Two stories per topic</span></span><span class="cost" data-cost>~6 min</span></label>
+    <label class="opt"><input type="radio" name="size" value="9"><span><span class="t">Everything</span><span class="d">All of today's stories</span></span><span class="cost" data-cost>~12 min</span></label>
+  </div>
+
+  <p class="eyebrow" id="briefLabel">Your brief</p>
+  <div id="brief"></div>
+
+  <section class="done" id="done">
+    <h2>You're done for today.</h2>
+    <p id="doneText"></p>
+    <a class="btn btn-link" href="topics.html">Change my topics</a>
+    <a class="btn btn-link" href="index.html">Back to start</a>
+  </section>
+
+  <div class="readbar" id="readbar"><span>Read <b id="readCount">0</b> of <b id="totalCount">0</b> stories</span><span id="timeLeft"></span></div>
+</div>
+
+<script>
+const NAMES = {world:"World",national:"National",politics:"Politics",business:"Business",technology:"Technology",science:"Science",health:"Health",sports:"Sports",weather:"Weather",boxoffice:"Box Office",pop:"Pop Culture"};
+const STORIES = {
+  world:[
+    ["US Central Command says it destroyed five more Iranian oil tankers; Brent crude tops $100 a barrel",4,"updated","Strikes confirmed by CENTCOM; the price move is from exchange data, not commentary."],
+    ["UK, France and Canada announce bans on imports from Israeli West Bank settlements",3,"","Each government published its own statement; effective dates differ."],
+    ["Typhoon warnings issued for Taiwan's east coast",3,"",""],
+    ["EU parliament approves revised AI Act enforcement timeline",3,"",""],
+    ["Chile counts votes in presidential runoff",2,"",""]],
+  national:[
+    ["NTSB says Amazon-branded cargo jet crew tried to abort landing before Miami crash",4,"updated","Preliminary report; speed brakes and thrust reversers did not deploy."],
+    ["Appeals court upholds block on IRS sharing taxpayer addresses with ICE",3,"",""],
+    ["FEMA opens disaster centers in three Gulf counties",2,"",""],
+    ["Amtrak restores full Northeast Corridor service",3,"",""],
+    ["Federal judge orders release of detained journalist",3,"",""]],
+  politics:[
+    ["Kavanaugh leaves Missouri's new congressional map blocked",4,"","A federal judge's conflicting order tells the state to use it; the Supreme Court has not resolved the split."],
+    ["New Hampshire primary voters set Pappas-Sununu Senate matchup",3,"developing",""],
+    ["Senate schedules vote on continuing resolution",2,"",""],
+    ["Governors' association meets on disaster funding",2,"",""]],
+  business:[
+    ["US bars imports of some Canadian alcohol, dairy and motorcycles starting Sept. 29",4,"updated",""],
+    ["Brent crude tops $100 a barrel; US gasoline averaged $4.07 on Aug. 31",3,"developing",""],
+    ["Fed officials signal no change at next meeting",3,"",""]],
+  technology:[
+    ["OpenAI says an internal model produced a Navier-Stokes proof; a researcher questions whether private work was used",4,"developing",""],
+    ["Meta launches AI agent Muse for US users",3,"",""],
+    ["Apple sets September event date",3,"",""],
+    ["Cloudflare outage traced to config push",2,"",""]],
+  science:[
+    ["Google DeepMind releases AI atlas mapping effects of 9 billion possible human DNA mutations",4,"",""],
+    ["Rattlesnake blood proteins block venom toxins better than current antivenom in lab tests",3,"",""],
+    ["NASA confirms Artemis III crew training schedule",2,"",""],
+    ["Study links wildfire smoke to preterm births",3,"",""],
+    ["New deep-sea vent species catalogued",2,"",""],
+    ["Europa Clipper completes flyby",3,"",""]],
+  health:[
+    ["FDA grants accelerated approval to breast cancer drug camizestrant",3,"",""],
+    ["FDA eases compounding rules to prevent shortage of newborn IV nutrition",3,"",""],
+    ["CDC updates fall vaccine guidance",3,"",""]],
+  sports:[
+    ["Shelton beats Alcaraz in the latest-finishing match in US Open history",4,"","Tiafoe rallies from two sets down in the other semifinal."],
+    ["Yesterday's scores: MLB, WNBA playoffs",2,"",""],
+    ["NFL week 1 injury report",3,"",""],
+    ["Ryder Cup captains announce picks",3,"",""],
+    ["College football top 25 shuffles",2,"",""]],
+  weather:[
+    ["Lowell weakens to tropical storm and moves away from Hawaii; outages and damage remain on Kauai and Oahu",4,"updated",""]],
+  boxoffice:[
+    ["Spider-Man: Brand New Day leads Monday with $5.5m; domestic total $923.5m",3,"",""],
+    ["Film producer Duncan Kenworthy to receive BAFTA Fellowship",2,"",""],
+    ["Coyote vs. Acme holds second",2,"",""],
+    ["The Odyssey passes $589m domestic",2,"",""]],
+  pop:[
+    ["South Park renamed 'South America' for its 29th season",3,"",""],
+    ["Alex Warren's WILDCHILD debuts at No. 1 on two Billboard charts",3,"",""],
+    ["Emmys announce presenters",2,"",""]]
+};
+const MIN_PER_STORY = 0.6;
+const topics = JSON.parse(localStorage.getItem("htn.topics")||"null") || ["world","national","technology","sports"];
+const briefEl = document.getElementById("brief");
+let stories = [];
+
+function render(){
+  const per = +document.querySelector('input[name="size"]:checked').value;
+  briefEl.innerHTML = topics.filter(t=>STORIES[t]).map(t => {
+    const rows = STORIES[t].slice(0, per);
+    return `<section class="section">
+      <div class="section-head"><h2>${NAMES[t]}</h2><span class="eyebrow">${rows.length} of ${STORIES[t].length}</span></div>
+      ${rows.map(([hd,src,flag,sum]) => `<article class="story">
+        <p class="hd">${hd}</p>
+        <div class="meta"><span class="pill src">${src} sources agree</span>${flag?`<span class="pill ${flag==="developing"?"dev":""}">${flag}</span>`:""}</div>
+        ${sum?`<p class="sum">${sum}</p>`:""}
+      </article>`).join("")}
+    </section>`;
+  }).join("");
+  stories = [...briefEl.querySelectorAll(".story")];
+  document.getElementById("totalCount").textContent = stories.length;
+  document.getElementById("doneText").textContent = `${stories.length} stories across ${topics.length} ${topics.length===1?"topic":"topics"}, about ${Math.max(1,Math.round(stories.length*MIN_PER_STORY))} minutes. Nothing else is waiting.`;
+  // costs reflect the chosen topics
+  document.querySelectorAll("#options .opt").forEach(o => {
+    const n = +o.querySelector("input").value;
+    const count = topics.reduce((a,t)=>a+Math.min(n,(STORIES[t]||[]).length),0);
+    o.querySelector("[data-cost]").textContent = `~${Math.max(1,Math.round(count*MIN_PER_STORY))} min`;
+    o.classList.toggle("on", o.querySelector("input").checked);
+  });
+  onScroll();
+}
+function onScroll(){
+  const mid = window.innerHeight*0.7;
+  const read = stories.filter(s => s.getBoundingClientRect().bottom < mid).length;
+  document.getElementById("readCount").textContent = read;
+  const left = stories.length - read;
+  document.getElementById("timeLeft").textContent = left===0 ? "Done" : `~${Math.max(1,Math.round(left*MIN_PER_STORY))} min left`;
+}
+document.getElementById("options").addEventListener("change", render);
+window.addEventListener("scroll", onScroll, {passive:true});
+render();
+</script>
+</body>
+</html>

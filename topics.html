@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HeresThe.News — Pick your topics</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="masthead">
+    <a class="back" href="index.html" aria-label="Back to start">&#8592;</a>
+    <a class="brand" href="index.html">HeresThe.<em>News</em></a>
+  </header>
+  <div class="progress" aria-label="Step 1 of 2"><span style="width:50%"></span></div>
+
+  <p class="eyebrow">Step 1 of 2</p>
+  <h1>I want to read about…</h1>
+  <p>Pick at least one. Your brief only covers what you choose.</p>
+
+  <form id="topicsForm">
+    <ul class="topics" id="topicList"></ul>
+    <p class="muted">Saved on this device. No account. You can change this any morning.</p>
+    <div class="sticky">
+      <button class="btn btn-primary" id="continueBtn" type="submit" disabled>Continue</button>
+    </div>
+  </form>
+</div>
+
+<script>
+const TOPICS = [
+  ["world","World","🌍",5],["national","National","🏛️",5],["politics","Politics","🗳️",4],
+  ["business","Business","📈",3],["technology","Technology","💻",4],["science","Science","🔬",6],
+  ["health","Health","🩺",3],["sports","Sports","🏈",5],["weather","Weather","🌦️",1],
+  ["boxoffice","Box Office","🎬",4],["pop","Pop Culture","🎤",3]
+];
+const saved = new Set(JSON.parse(localStorage.getItem("htn.topics")||"[]"));
+const list = document.getElementById("topicList");
+list.innerHTML = TOPICS.map(([id,name,ico,n]) => `
+  <li><label>
+    <input type="checkbox" name="topic" value="${id}" ${saved.has(id)?"checked":""}>
+    <span class="ico">${ico}</span>
+    <span class="name">${name}</span>
+    <span class="count">${n} ${n===1?"story":"stories"} today</span>
+    <span class="tick">✓</span>
+  </label></li>`).join("");
+
+const btn = document.getElementById("continueBtn");
+function refresh(){
+  const n = list.querySelectorAll("input:checked").length;
+  btn.disabled = n === 0;
+  btn.textContent = n === 0 ? "Pick at least one topic" : `Continue with ${n} ${n===1?"topic":"topics"}`;
+}
+list.addEventListener("change", refresh);
+refresh();
+
+document.getElementById("topicsForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const chosen = [...list.querySelectorAll("input:checked")].map(i => i.value);
+  localStorage.setItem("htn.topics", JSON.stringify(chosen));
+  location.href = "brief.html";
+});
+</script>
+</body>
+</html>
