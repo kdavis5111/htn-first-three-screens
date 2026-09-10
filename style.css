@@ -1,6 +1,6 @@
 :root{
   --paper:#151815; --card:#1C201C; --ink:#E6E9E4; --ink-2:#A9B1A8; --ink-3:#98A096;
-  --line:#2A2F2A; --green:#43BFA0; --green-ink:#0F1A16; --green-tint:#1D2F2A; --gold:#C4A44E;
+  --line:#2A2F2A; --clay:#D07A50; --green:#43BFA0; --green-ink:#0F1A16; --green-tint:#1D2F2A; --gold:#C4A44E;
   --serif:ui-serif,"New York",Georgia,"Times New Roman",serif;
   --sans:system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
@@ -17,6 +17,7 @@ a{color:inherit}
 .masthead .back:hover{color:var(--ink);border-color:var(--ink-3)}
 .brand{font-family:var(--serif);font-weight:700;font-size:1.35rem;letter-spacing:-.01em;text-decoration:none;color:var(--ink)}
 .brand em{font-style:normal;color:var(--green)}
+.brand .dot{color:var(--clay)}
 
 /* progress bar */
 .progress{height:6px;background:var(--line);border-radius:999px;overflow:hidden;margin:2px 0 22px}
@@ -123,7 +124,7 @@ p{margin:0 0 14px;color:var(--ink-2)}
 /* reassurance, in the middle of the screen where a mascot would sit */
 .bubble-wrap{flex:1;display:flex;align-items:center;justify-content:center;gap:12px;padding:24px 0}
 .bubble-wrap .mark{width:44px;height:44px;border-radius:50%;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;font-size:.95rem;color:var(--ink);flex:none}
-.bubble-wrap .mark em{font-style:normal;color:var(--green)}
+.bubble-wrap .mark em{font-style:normal;color:var(--clay)}
 .bubble{position:relative;margin:0;padding:12px 16px;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink-2);font-size:.92rem;max-width:240px}
 .bubble::before{content:"";position:absolute;left:-7px;top:50%;width:12px;height:12px;background:var(--card);border-left:1px solid var(--line);border-bottom:1px solid var(--line);transform:translateY(-50%) rotate(45deg)}
 
