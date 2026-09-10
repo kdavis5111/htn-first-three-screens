@@ -17,32 +17,33 @@
   <h1>Pick your style</h1>
 
   <div class="choices" id="seg">
-    <label class="choice"><input type="radio" name="mode" value="headlines"><span class="t">Headlines</span><span class="d">Just the news</span><span class="tick">✓</span></label>
-    <label class="choice on"><input type="radio" name="mode" value="compact" checked><span class="t">Compact</span><span class="d">+ why it matters</span><span class="tick">✓</span></label>
-    <label class="choice"><input type="radio" name="mode" value="detailed"><span class="t">Detailed</span><span class="d">+ facts &amp; sources</span><span class="tick">✓</span></label>
+    <label class="choice"><input type="radio" name="mode" value="headlines"><span class="t">Headlines<span class="d">Just the headline</span></span><span class="tick">✓</span></label>
+    <label class="choice"><input type="radio" name="mode" value="compact"><span class="t">Compact<span class="d">Headline and why it matters</span></span><span class="tick">✓</span></label>
+    <label class="choice"><input type="radio" name="mode" value="detailed"><span class="t">Detailed<span class="d">Every fact, labeled and sourced</span></span><span class="tick">✓</span></label>
   </div>
-  <p class="note"><span class="dot"></span>You can always change your style later.</p>
 
-  <p class="eyebrow">Preview</p>
-  <div id="example" class="mode-compact"></div>
+  <div class="bubble-wrap">
+    <span class="mark" aria-hidden="true">HT<em>.</em></span>
+    <p class="bubble">You can always change your style later.</p>
+  </div>
 
   <div class="picker">
-    <a class="btn btn-primary" href="https://heresthe.news" id="finish">Show my paper</a>
+    <a class="btn btn-primary" href="https://heresthe.news" id="finish" aria-disabled="true">Pick a style</a>
   </div>
 </div>
-<script src="story.js"></script>
 <script>
-const ex = document.getElementById("example"), seg = document.getElementById("seg");
-ex.innerHTML = STORY_HTML;
+const seg = document.getElementById("seg"), finish = document.getElementById("finish");
 const saved = localStorage.getItem("htn.style");
 if (saved) { const r = seg.querySelector(`input[value="${saved}"]`); if (r) r.checked = true; }
 function apply(){
-  const m = seg.querySelector("input:checked").value;
-  ex.className = "mode-"+m;
+  const picked = seg.querySelector("input:checked");
   seg.querySelectorAll(".choice").forEach(l => l.classList.toggle("on", l.querySelector("input").checked));
-  localStorage.setItem("htn.style", m);
+  finish.textContent = picked ? "Show my paper" : "Pick a style";
+  finish.setAttribute("aria-disabled", picked ? "false" : "true");
+  if (picked) localStorage.setItem("htn.style", picked.value);
 }
 seg.addEventListener("change", apply);
+finish.addEventListener("click", e => { if (finish.getAttribute("aria-disabled") === "true") e.preventDefault(); });
 apply();
 </script>
 </body>
