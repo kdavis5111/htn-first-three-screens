@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HeresThe.News</title>
-<link rel="stylesheet" href="style.css?v=5">
+<link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
 <div class="app landing">
@@ -40,11 +40,6 @@
       </div>
     </div>
 
-    <ul class="stack">
-      <li>No ads.</li>
-      <li>46 sources.</li>
-      <li>Every fact labeled.</li>
-    </ul>
   </section>
 
   <!-- The landing itself: what stays on screen -->
@@ -65,44 +60,40 @@
 (function(){
   const stage = document.getElementById("stage"), rest = document.getElementById("rest");
   const skip = document.getElementById("skip"), replay = document.getElementById("replay");
-  const stack = [...document.querySelectorAll(".stack li")];
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const seen = sessionStorage.getItem("htn.intro") === "1";
 
   // No GSAP (offline)? Show the landing.
   if (typeof gsap === "undefined") { stage.hidden = true; skip.hidden = true; return; }
 
-  const pop = i => gsap.from(stack[i], {autoAlpha:0, x:26, duration:.45, ease:"back.out(1.7)"});
-
   const tl = gsap.timeline({defaults:{ease:"power2.out"}, paused:true, onComplete:done});
   tl.set(rest, {autoAlpha:0})
-    // 1. a quiet morning: the phone, then the time flips to 7:00
-    .from(".phone", {y:60, autoAlpha:0, duration:.8})
-    .to(".lm", {autoAlpha:0, y:-6, duration:.2}, "+=.9")
+    // 1. a quiet morning
+    .from(".phone", {y:60, autoAlpha:0, duration:1.0})
+    // 2. the time flips to 7:00
+    .to(".lm", {autoAlpha:0, y:-6, duration:.25}, "+=1.6")
     .call(() => { document.querySelector(".lh").textContent = "7"; document.querySelector(".lm").textContent = "00"; })
-    .fromTo(".lm", {autoAlpha:0, y:6}, {autoAlpha:1, y:0, duration:.25, immediateRender:false})
-    // 2. the notification arrives
-    .from(".notif", {y:-30, autoAlpha:0, duration:.55, ease:"back.out(1.4)"}, "+=.5")
-    .to(".notif", {scale:.97, duration:.12, yoyo:true, repeat:1}, "+=1.0")
-    // 3. zoom into it: the lock screen grows and fades, the app comes up underneath
-    .to(".lock", {scale:2.6, autoAlpha:0, transformOrigin:"50% 32%", duration:.9, ease:"power3.in"})
-    .fromTo(".appview", {scale:.92, autoAlpha:0}, {scale:1, autoAlpha:1, duration:.6}, "-=.25")
-    .add(pop(0), "<.2")
-    // 4. what the app shows: one headline, labeled facts, named sources
-    .from(".pfacts li", {autoAlpha:0, x:-12, stagger:.45, duration:.35}, "+=.3")
-    .add(pop(1), "<.5")
-    .from(".psrc", {autoAlpha:0, duration:.4}, "+=.2")
-    .add(pop(2), "<")
-    .from(".pdone", {autoAlpha:0, y:8, duration:.4}, "+=.5")
-    // 5. the scene gives way to the landing
-    .to(stage, {autoAlpha:0, y:-16, duration:.7}, "+=1.2")
-    .to(".intro-head", {autoAlpha:0, duration:.4}, "<")
-    .to(rest, {autoAlpha:1, duration:.5}, "<.35")
-    .from(".brand-big", {y:16, duration:.6}, "<")
-    .from(".motto", {y:16, autoAlpha:0, duration:.6}, "<.15")
-    .from(".lede", {y:12, autoAlpha:0, duration:.5}, "<.2")
-    .from(".actions", {y:14, autoAlpha:0, duration:.6}, "<.2");
+    .fromTo(".lm", {autoAlpha:0, y:6}, {autoAlpha:1, y:0, duration:.3, immediateRender:false})
+    // 3. the notification arrives, and waits
+    .from(".notif", {y:-30, autoAlpha:0, duration:.7, ease:"back.out(1.4)"}, "+=1.2")
+    .to(".notif", {scale:.97, duration:.15, yoyo:true, repeat:1}, "+=2.0")
+    // 4. zoom into it: the lock screen grows away, the app comes up underneath
+    .to(".lock", {scale:2.6, autoAlpha:0, transformOrigin:"50% 32%", duration:1.1, ease:"power3.in"}, "+=.3")
+    .fromTo(".appview", {scale:.94, autoAlpha:0}, {scale:1, autoAlpha:1, duration:.8}, "-=.3")
+    // 5. what the app shows, one thing at a time
+    .from(".pfacts li", {autoAlpha:0, x:-12, stagger:1.1, duration:.5}, "+=1.2")
+    .from(".psrc", {autoAlpha:0, duration:.5}, "+=.9")
+    .from(".pdone", {autoAlpha:0, y:8, duration:.5}, "+=1.2")
+    // 6. the scene gives way to the landing
+    .to(stage, {autoAlpha:0, y:-16, duration:.9}, "+=2.2")
+    .to(".intro-head", {autoAlpha:0, duration:.5}, "<")
+    .to(rest, {autoAlpha:1, duration:.7}, "<.5")
+    .from(".brand-big", {y:16, duration:.8}, "<")
+    .from(".motto", {y:16, autoAlpha:0, duration:.8}, "<.25")
+    .from(".lede", {y:12, autoAlpha:0, duration:.6}, "<.3")
+    .from(".actions", {y:14, autoAlpha:0, duration:.7}, "<.3");
 
+  window.__introTimeline = tl;
   function done(){ sessionStorage.setItem("htn.intro","1"); skip.style.visibility = "hidden"; stage.style.pointerEvents = "none"; }
   function play(){ document.querySelector(".lh").textContent = "6"; document.querySelector(".lm").textContent = "59"; skip.style.visibility = "visible"; stage.style.pointerEvents = ""; tl.restart(); }
 
