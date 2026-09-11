@@ -69,9 +69,9 @@
     .from(".phone", {y:60, autoAlpha:0, duration:1.0})
     // 3. the notification arrives, and waits
     .from(".notif", {y:-30, autoAlpha:0, duration:.7, ease:"back.out(1.4)"}, "+=.6")
-    .to(".notif", {scale:.97, duration:.15, yoyo:true, repeat:1}, "+=2.0")
+    .to(".notif", {scale:.97, duration:.12, yoyo:true, repeat:1}, "+=.9")
     // 4. zoom into it: the lock screen grows away, the app comes up underneath
-    .to(".lock", {scale:2.6, autoAlpha:0, transformOrigin:"50% 32%", duration:1.1, ease:"power3.in"}, "+=.3")
+    .to(".lock", {scale:2.6, autoAlpha:0, transformOrigin:"50% 32%", duration:.8, ease:"power3.in"}, "+=.1")
     .fromTo(".appview", {scale:.94, autoAlpha:0}, {scale:1, autoAlpha:1, duration:.8}, "-=.3")
     // 5. what the app shows, one thing at a time
     .from(".pfacts li", {autoAlpha:0, x:-12, stagger:1.1, duration:.5}, "+=1.2")
