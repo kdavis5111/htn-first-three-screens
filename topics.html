@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HeresThe.News — Your topics</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -33,6 +33,7 @@
   <form id="topicsForm">
     <ul class="topics" id="topicList"></ul>
     <div class="sticky">
+      <p class="live" id="live"></p>
       <button class="btn btn-primary" id="continueBtn" type="submit" disabled>Next</button>
       <button class="btn btn-link" id="allBtn" type="button">Show me everything</button>
     </div>
@@ -40,7 +41,7 @@
 </div>
 
 <script>
-const TOPICS = [["world","World"],["national","National"],["politics","Politics"],["business","Business"],["technology","Technology"],["science","Science"],["health","Health"],["sports","Sports"],["weather","Weather"],["boxoffice","Box Office"],["pop","Pop Culture"]];
+const TOPICS = [["world","World",5],["national","National",5],["politics","Politics",4],["business","Business",3],["technology","Technology",4],["science","Science",6],["health","Health",3],["sports","Sports",5],["weather","Weather",1],["boxoffice","Box Office",4],["pop","Pop Culture",3]];
 const saved = new Set(JSON.parse(localStorage.getItem("htn.topics")||"[]"));
 const list = document.getElementById("topicList");
 list.innerHTML = TOPICS.map(([id,name]) => `
@@ -52,10 +53,14 @@ list.innerHTML = TOPICS.map(([id,name]) => `
   </label></li>`).join("");
 
 const btn = document.getElementById("continueBtn");
+const live = document.getElementById("live");
 function refresh(){
-  const n = list.querySelectorAll("input:checked").length;
-  btn.disabled = n === 0;
-  btn.textContent = n === 0 ? "Pick at least one" : "Next";
+  const picked = [...list.querySelectorAll("input:checked")].map(i => TOPICS.find(t => t[0] === i.value));
+  btn.disabled = picked.length === 0;
+  btn.textContent = picked.length === 0 ? "Pick at least one" : "Show my paper";
+  const total = picked.reduce((a,t) => a + t[2], 0);
+  live.innerHTML = picked.length === 0 ? "Your paper: <b>nothing yet</b>"
+    : `Your paper: <b>${picked.map(t => t[1]).join(" · ")}</b> — ${total} stories`;
 }
 list.addEventListener("change", refresh);
 refresh();
@@ -67,7 +72,7 @@ document.getElementById("allBtn").addEventListener("click", () => {
 document.getElementById("topicsForm").addEventListener("submit", e => {
   e.preventDefault();
   localStorage.setItem("htn.topics", JSON.stringify([...list.querySelectorAll("input:checked")].map(i => i.value)));
-  location.href = "style.html";
+  location.href = "paper.html";
 });
 </script>
 </body>

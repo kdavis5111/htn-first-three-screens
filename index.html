@@ -4,38 +4,147 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HeresThe.News</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
-<div class="app">
-  <header class="masthead">
+<div class="app landing">
+  <header class="masthead intro-head">
     <a class="brand" href="index.html">HeresThe<span class="dot">.</span><em>News</em></a>
+    <button class="skip" id="skip" type="button">Skip</button>
   </header>
 
-  <main class="hero">
-    <div class="demo" aria-hidden="true">
-      <div class="screen mode-headlines" id="demoScreen"></div>
-      <div class="caps" id="demoCap"></div>
+  <!-- The intro: a morning, a phone, and what happens inside it -->
+  <section class="stage" id="stage" aria-hidden="true">
+    <div class="clock">
+      <svg viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="46" class="face"/>
+        <g class="ticks"><line x1="50" y1="8" x2="50" y2="14"/><line x1="92" y1="50" x2="86" y2="50"/><line x1="50" y1="92" x2="50" y2="86"/><line x1="8" y1="50" x2="14" y2="50"/></g>
+        <line class="hour" x1="50" y1="50" x2="50" y2="26"/>
+        <line class="minute" x1="50" y1="50" x2="50" y2="18"/>
+        <circle cx="50" cy="50" r="2.5" class="pin"/>
+      </svg>
     </div>
 
-    <h1>Just what happened. <em>Every fact labeled, every source named.</em></h1>
+    <div class="phone">
+      <div class="pscreen">
+        <div class="ptime">7:00</div>
+        <div class="notif">
+          <span class="nb">HT<em>.</em></span>
+          <span class="nt"><b>HeresThe.News</b>Today's paper is ready</span>
+        </div>
+        <div class="sweep"></div>
+        <div class="junk">
+          <div class="ad">AD · Limited time offer!</div>
+          <div class="tease">You won't BELIEVE #7…</div>
+          <div class="popup">Subscribe now!<span>✕</span></div>
+          <div class="ad">SPONSORED</div>
+          <div class="tease">This one trick…</div>
+        </div>
+        <div class="news">
+          <div class="slants">
+            <p class="slant">Board WASTES millions on library boondoggle</p>
+            <p class="slant">Board delivers long-overdue library win</p>
+            <p class="slant">You won't BELIEVE what the board just did</p>
+          </div>
+          <p class="merged">School board approves $4.1M library</p>
+          <ul class="pfacts">
+            <li><span class="chip status-verified">verified</span>Vote passed 5–2 on Tuesday</li>
+            <li><span class="chip status-verified">verified</span>Doors open fall 2027</li>
+            <li><span class="chip status-reported">reported</span>Bond sale covers $3M</li>
+            <li><span class="chip status-disputed">disputed</span>Cost: $4.1M vs $4.6M</li>
+          </ul>
+          <p class="psrc">— AP · Reuters · Daily Herald</p>
+          <div class="pdone">Done for today ✓</div>
+        </div>
+      </div>
+    </div>
 
+    <ul class="stack">
+      <li>No ads.</li>
+      <li>46 sources.</li>
+      <li>Left, right, and wire.</li>
+      <li>Every fact labeled.</li>
+      <li>Every source named.</li>
+      <li>Done in minutes.</li>
+    </ul>
+  </section>
+
+  <!-- The landing itself: what stays on screen -->
+  <main class="rest" id="rest">
+    <p class="brand-big">HeresThe<span class="dot">.</span><em>News</em></p>
+    <h1 class="motto">No ads. No bait.<br>Just news.</h1>
+    <p class="lede">Today's paper, checked across 46 sources.</p>
     <div class="actions">
-      <a class="btn btn-primary" href="topics.html">Pick my topics</a>
-      <a class="btn btn-link" href="style.html">Skip to today's news</a>
+      <a class="btn btn-primary" href="paper.html">Get today's paper</a>
+      <a class="btn btn-link" href="topics.html">Pick my topics</a>
     </div>
+    <button class="replay" id="replay" type="button">Replay intro</button>
   </main>
 </div>
-<script src="story.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
-const screen = document.getElementById("demoScreen"), cap = document.getElementById("demoCap");
-screen.innerHTML = STORY_HTML;
-const PHASES = [["headlines","<b>Headlines</b> only"],["compact","<b>Compact</b> · why it matters"],["detailed scroll-1","<b>Detailed</b> · every fact labeled"],["detailed scroll-2","Every source <b>named</b>"]];
-let i = 0;
-function show(){ const [m,c] = PHASES[i]; screen.className = "screen mode-"+m; cap.innerHTML = c; i = (i+1) % PHASES.length; }
-show();
-if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(show, 2600);
-else { screen.className = "screen mode-detailed scroll-1"; cap.innerHTML = "Every fact labeled, every source named"; }
+(function(){
+  const stage = document.getElementById("stage"), rest = document.getElementById("rest");
+  const skip = document.getElementById("skip"), replay = document.getElementById("replay");
+  const stack = [...document.querySelectorAll(".stack li")];
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const seen = sessionStorage.getItem("htn.intro") === "1";
+
+  // No GSAP (offline)? Show the landing.
+  if (typeof gsap === "undefined") { stage.hidden = true; skip.hidden = true; return; }
+
+  const pop = i => gsap.from(stack[i], {autoAlpha:0, x:26, duration:.45, ease:"back.out(1.7)"});
+
+  const tl = gsap.timeline({defaults:{ease:"power2.out"}, paused:true, onComplete:done});
+  tl.set(rest, {autoAlpha:0})
+    // 1. morning
+    .from(".clock", {autoAlpha:0, scale:.85, duration:.6})
+    .to(".hour",   {rotation:210, transformOrigin:"50px 50px", duration:1.3, ease:"power1.inOut"}, "<")
+    .to(".minute", {rotation:360, transformOrigin:"50px 50px", duration:1.3, ease:"power1.inOut"}, "<")
+    .to(".clock",  {rotation:-4, duration:.07, yoyo:true, repeat:7, ease:"none"}, ">-.05")
+    .to(".clock",  {rotation:0, autoAlpha:0, scale:.6, duration:.45}, "+=.15")
+    .from(".phone", {y:90, autoAlpha:0, duration:.7}, "<.1")
+    // 2. the notification
+    .from(".notif", {y:-40, autoAlpha:0, duration:.5}, "+=.2")
+    .to(".notif",   {scale:.96, duration:.12, yoyo:true, repeat:1}, "+=.8")
+    .to(".notif",   {autoAlpha:0, y:-16, duration:.3})
+    // 3. the usual junk, swept away
+    .from(".junk > *", {autoAlpha:0, y:14, stagger:.12, duration:.3}, "<")
+    .fromTo(".sweep", {top:"-4%", autoAlpha:1}, {top:"104%", duration:.75, ease:"power2.inOut"}, "+=.7")
+    .to(".junk > *", {autoAlpha:0, x:36, stagger:.05, duration:.25}, "<.12")
+    .to(".sweep", {autoAlpha:0, duration:.15})
+    .add(pop(0), "<-.2")
+    // 4. three slants become one plain headline
+    .from(".slant", {autoAlpha:0, y:10, stagger:.22, duration:.35}, "+=.1")
+    .add(pop(1), "+=.25")
+    .to(".slant", {autoAlpha:0, y:-8, stagger:.05, duration:.4}, "+=.7")
+    .from(".merged", {autoAlpha:0, y:8, duration:.45}, "<.25")
+    .add(pop(2), "<")
+    // 5. facts, labeled and sourced
+    .from(".pfacts li", {autoAlpha:0, x:-12, stagger:.38, duration:.35}, "+=.3")
+    .add(pop(3), "<.5")
+    .from(".psrc", {autoAlpha:0, duration:.4}, "+=.2")
+    .add(pop(4), "<")
+    // 6. done
+    .from(".pdone", {autoAlpha:0, y:8, duration:.4}, "+=.5")
+    .add(pop(5), "<")
+    // 7. scene gives way to the landing
+    .to(stage, {autoAlpha:0, y:-16, duration:.7}, "+=1.2")
+    .to(".intro-head", {autoAlpha:0, duration:.4}, "<")
+    .to(rest, {autoAlpha:1, duration:.5}, "<.35")
+    .from(".brand-big", {y:16, duration:.6}, "<")
+    .from(".motto", {y:16, autoAlpha:0, duration:.6}, "<.15")
+    .from(".lede", {y:12, autoAlpha:0, duration:.5}, "<.2")
+    .from(".actions", {y:14, autoAlpha:0, duration:.6}, "<.2");
+
+  function done(){ sessionStorage.setItem("htn.intro","1"); skip.style.visibility = "hidden"; stage.style.pointerEvents = "none"; }
+  function play(){ skip.style.visibility = "visible"; stage.style.pointerEvents = ""; tl.restart(); }
+
+  if (reduce || seen) { tl.progress(1); done(); } else { play(); }
+  skip.addEventListener("click", () => { tl.progress(1); done(); });
+  replay.addEventListener("click", play);
+})();
 </script>
 </body>
 </html>
