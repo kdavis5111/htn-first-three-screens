@@ -86,7 +86,7 @@
     .from(".m3", {y:12, autoAlpha:0, duration:.6}, "+=.5")
     .from([".actions", ".replay"], {y:14, autoAlpha:0, duration:.7}, "+=.6");
 
-  tl.timeScale(1.1);
+  tl.timeScale(1.5);
   window.__introTimeline = tl;
   function done(){ sessionStorage.setItem("htn.intro","1"); skip.style.visibility = "hidden"; stage.style.pointerEvents = "none"; }
   function play(){ skip.style.visibility = "visible"; stage.style.pointerEvents = ""; tl.restart(); }
