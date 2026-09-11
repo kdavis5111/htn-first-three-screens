@@ -68,7 +68,7 @@
     // 1. a quiet morning
     .from(".phone", {y:60, autoAlpha:0, duration:1.0})
     // 3. the notification arrives, and waits
-    .from(".notif", {y:-30, autoAlpha:0, duration:.7, ease:"back.out(1.4)"}, "+=1.4")
+    .from(".notif", {y:-30, autoAlpha:0, duration:.7, ease:"back.out(1.4)"}, "+=.6")
     .to(".notif", {scale:.97, duration:.15, yoyo:true, repeat:1}, "+=2.0")
     // 4. zoom into it: the lock screen grows away, the app comes up underneath
     .to(".lock", {scale:2.6, autoAlpha:0, transformOrigin:"50% 32%", duration:1.1, ease:"power3.in"}, "+=.3")
@@ -86,6 +86,7 @@
     .from(".m3", {y:12, autoAlpha:0, duration:.6}, "+=.5")
     .from([".actions", ".replay"], {y:14, autoAlpha:0, duration:.7}, "+=.6");
 
+  tl.timeScale(1.1);
   window.__introTimeline = tl;
   function done(){ sessionStorage.setItem("htn.intro","1"); skip.style.visibility = "hidden"; stage.style.pointerEvents = "none"; }
   function play(){ skip.style.visibility = "visible"; stage.style.pointerEvents = ""; tl.restart(); }
