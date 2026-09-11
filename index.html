@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HeresThe.News</title>
-<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
 <div class="app landing">
@@ -13,43 +13,24 @@
     <button class="skip" id="skip" type="button">Skip</button>
   </header>
 
-  <!-- The intro: a morning, a phone, and what happens inside it -->
+  <!-- The intro: a phone on a quiet morning, and the app opening -->
   <section class="stage" id="stage" aria-hidden="true">
-    <div class="clock">
-      <svg viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="46" class="face"/>
-        <g class="ticks"><line x1="50" y1="8" x2="50" y2="14"/><line x1="92" y1="50" x2="86" y2="50"/><line x1="50" y1="92" x2="50" y2="86"/><line x1="8" y1="50" x2="14" y2="50"/></g>
-        <line class="hour" x1="50" y1="50" x2="50" y2="26"/>
-        <line class="minute" x1="50" y1="50" x2="50" y2="18"/>
-        <circle cx="50" cy="50" r="2.5" class="pin"/>
-      </svg>
-    </div>
-
     <div class="phone">
       <div class="pscreen">
-        <div class="ptime">7:00</div>
-        <div class="notif">
-          <span class="nb">HT<em>.</em></span>
-          <span class="nt"><b>HeresThe.News</b>Today's paper is ready</span>
-        </div>
-        <div class="sweep"></div>
-        <div class="junk">
-          <div class="ad">AD · Limited time offer!</div>
-          <div class="tease">You won't BELIEVE #7…</div>
-          <div class="popup">Subscribe now!<span>✕</span></div>
-          <div class="ad">SPONSORED</div>
-          <div class="tease">This one trick…</div>
-        </div>
-        <div class="news">
-          <div class="slants">
-            <p class="slant">Board WASTES millions on library boondoggle</p>
-            <p class="slant">Board delivers long-overdue library win</p>
-            <p class="slant">You won't BELIEVE what the board just did</p>
+        <div class="lock">
+          <p class="ldate">Monday, August 3</p>
+          <p class="ltime"><span class="lh">6</span>:<span class="lm">59</span></p>
+          <div class="notif">
+            <span class="nb">HT<em>.</em></span>
+            <span class="nt"><b>HeresThe.News</b>Today's paper is ready.</span>
           </div>
+        </div>
+        <div class="appview">
+          <p class="abrand">HeresThe<span class="dot">.</span><em>News</em></p>
+          <p class="aeyebrow">Today's paper</p>
           <p class="merged">School board approves $4.1M library</p>
           <ul class="pfacts">
             <li><span class="chip status-verified">verified</span>Vote passed 5–2 on Tuesday</li>
-            <li><span class="chip status-verified">verified</span>Doors open fall 2027</li>
             <li><span class="chip status-reported">reported</span>Bond sale covers $3M</li>
             <li><span class="chip status-disputed">disputed</span>Cost: $4.1M vs $4.6M</li>
           </ul>
@@ -62,10 +43,7 @@
     <ul class="stack">
       <li>No ads.</li>
       <li>46 sources.</li>
-      <li>Left, right, and wire.</li>
       <li>Every fact labeled.</li>
-      <li>Every source named.</li>
-      <li>Done in minutes.</li>
     </ul>
   </section>
 
@@ -98,38 +76,25 @@
 
   const tl = gsap.timeline({defaults:{ease:"power2.out"}, paused:true, onComplete:done});
   tl.set(rest, {autoAlpha:0})
-    // 1. morning
-    .from(".clock", {autoAlpha:0, scale:.85, duration:.6})
-    .to(".hour",   {rotation:210, transformOrigin:"50px 50px", duration:1.3, ease:"power1.inOut"}, "<")
-    .to(".minute", {rotation:360, transformOrigin:"50px 50px", duration:1.3, ease:"power1.inOut"}, "<")
-    .to(".clock",  {rotation:-4, duration:.07, yoyo:true, repeat:7, ease:"none"}, ">-.05")
-    .to(".clock",  {rotation:0, autoAlpha:0, scale:.6, duration:.45}, "+=.15")
-    .from(".phone", {y:90, autoAlpha:0, duration:.7}, "<.1")
-    // 2. the notification
-    .from(".notif", {y:-40, autoAlpha:0, duration:.5}, "+=.2")
-    .to(".notif",   {scale:.96, duration:.12, yoyo:true, repeat:1}, "+=.8")
-    .to(".notif",   {autoAlpha:0, y:-16, duration:.3})
-    // 3. the usual junk, swept away
-    .from(".junk > *", {autoAlpha:0, y:14, stagger:.12, duration:.3}, "<")
-    .fromTo(".sweep", {top:"-4%", autoAlpha:1}, {top:"104%", duration:.75, ease:"power2.inOut"}, "+=.7")
-    .to(".junk > *", {autoAlpha:0, x:36, stagger:.05, duration:.25}, "<.12")
-    .to(".sweep", {autoAlpha:0, duration:.15})
-    .add(pop(0), "<-.2")
-    // 4. three slants become one plain headline
-    .from(".slant", {autoAlpha:0, y:10, stagger:.22, duration:.35}, "+=.1")
-    .add(pop(1), "+=.25")
-    .to(".slant", {autoAlpha:0, y:-8, stagger:.05, duration:.4}, "+=.7")
-    .from(".merged", {autoAlpha:0, y:8, duration:.45}, "<.25")
-    .add(pop(2), "<")
-    // 5. facts, labeled and sourced
-    .from(".pfacts li", {autoAlpha:0, x:-12, stagger:.38, duration:.35}, "+=.3")
-    .add(pop(3), "<.5")
+    // 1. a quiet morning: the phone, then the time flips to 7:00
+    .from(".phone", {y:60, autoAlpha:0, duration:.8})
+    .to(".lm", {autoAlpha:0, y:-6, duration:.2}, "+=.9")
+    .call(() => { document.querySelector(".lh").textContent = "7"; document.querySelector(".lm").textContent = "00"; })
+    .fromTo(".lm", {autoAlpha:0, y:6}, {autoAlpha:1, y:0, duration:.25, immediateRender:false})
+    // 2. the notification arrives
+    .from(".notif", {y:-30, autoAlpha:0, duration:.55, ease:"back.out(1.4)"}, "+=.5")
+    .to(".notif", {scale:.97, duration:.12, yoyo:true, repeat:1}, "+=1.0")
+    // 3. zoom into it: the lock screen grows and fades, the app comes up underneath
+    .to(".lock", {scale:2.6, autoAlpha:0, transformOrigin:"50% 32%", duration:.9, ease:"power3.in"})
+    .fromTo(".appview", {scale:.92, autoAlpha:0}, {scale:1, autoAlpha:1, duration:.6}, "-=.25")
+    .add(pop(0), "<.2")
+    // 4. what the app shows: one headline, labeled facts, named sources
+    .from(".pfacts li", {autoAlpha:0, x:-12, stagger:.45, duration:.35}, "+=.3")
+    .add(pop(1), "<.5")
     .from(".psrc", {autoAlpha:0, duration:.4}, "+=.2")
-    .add(pop(4), "<")
-    // 6. done
+    .add(pop(2), "<")
     .from(".pdone", {autoAlpha:0, y:8, duration:.4}, "+=.5")
-    .add(pop(5), "<")
-    // 7. scene gives way to the landing
+    // 5. the scene gives way to the landing
     .to(stage, {autoAlpha:0, y:-16, duration:.7}, "+=1.2")
     .to(".intro-head", {autoAlpha:0, duration:.4}, "<")
     .to(rest, {autoAlpha:1, duration:.5}, "<.35")
@@ -139,7 +104,7 @@
     .from(".actions", {y:14, autoAlpha:0, duration:.6}, "<.2");
 
   function done(){ sessionStorage.setItem("htn.intro","1"); skip.style.visibility = "hidden"; stage.style.pointerEvents = "none"; }
-  function play(){ skip.style.visibility = "visible"; stage.style.pointerEvents = ""; tl.restart(); }
+  function play(){ document.querySelector(".lh").textContent = "6"; document.querySelector(".lm").textContent = "59"; skip.style.visibility = "visible"; stage.style.pointerEvents = ""; tl.restart(); }
 
   if (reduce || seen) { tl.progress(1); done(); } else { play(); }
   skip.addEventListener("click", () => { tl.progress(1); done(); });
