@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HeresThe.News</title>
-<link rel="stylesheet" href="style.css?v=6">
+<link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
 <div class="app landing">
@@ -35,7 +35,6 @@
             <li><span class="chip status-disputed">disputed</span>Cost: $4.1M vs $4.6M</li>
           </ul>
           <p class="psrc">— AP · Reuters · Daily Herald</p>
-          <div class="pdone">Done for today ✓</div>
         </div>
       </div>
     </div>
@@ -45,11 +44,9 @@
   <!-- The landing itself: what stays on screen -->
   <main class="rest" id="rest">
     <p class="brand-big">HeresThe<span class="dot">.</span><em>News</em></p>
-    <h1 class="motto">No ads. No bait.<br>Just news.</h1>
-    <p class="lede">Today's paper, checked across 46 sources.</p>
+    <h1 class="motto"><span class="m1">No ads.</span> <span class="m2">No bait.</span><br><span class="m3">Just news.</span></h1>
     <div class="actions">
-      <a class="btn btn-primary" href="paper.html">Get today's paper</a>
-      <a class="btn btn-link" href="topics.html">Pick my topics</a>
+      <a class="btn btn-primary" href="paper.html">Read Today's News</a>
     </div>
     <button class="replay" id="replay" type="button">Replay intro</button>
   </main>
@@ -71,11 +68,11 @@
     // 1. a quiet morning
     .from(".phone", {y:60, autoAlpha:0, duration:1.0})
     // 2. the time flips to 7:00
-    .to(".lm", {autoAlpha:0, y:-6, duration:.25}, "+=1.6")
+    .to(".lm", {autoAlpha:0, y:-6, duration:.2}, "+=.5")
     .call(() => { document.querySelector(".lh").textContent = "7"; document.querySelector(".lm").textContent = "00"; })
     .fromTo(".lm", {autoAlpha:0, y:6}, {autoAlpha:1, y:0, duration:.3, immediateRender:false})
     // 3. the notification arrives, and waits
-    .from(".notif", {y:-30, autoAlpha:0, duration:.7, ease:"back.out(1.4)"}, "+=1.2")
+    .from(".notif", {y:-30, autoAlpha:0, duration:.7, ease:"back.out(1.4)"}, "+=.9")
     .to(".notif", {scale:.97, duration:.15, yoyo:true, repeat:1}, "+=2.0")
     // 4. zoom into it: the lock screen grows away, the app comes up underneath
     .to(".lock", {scale:2.6, autoAlpha:0, transformOrigin:"50% 32%", duration:1.1, ease:"power3.in"}, "+=.3")
@@ -83,15 +80,15 @@
     // 5. what the app shows, one thing at a time
     .from(".pfacts li", {autoAlpha:0, x:-12, stagger:1.1, duration:.5}, "+=1.2")
     .from(".psrc", {autoAlpha:0, duration:.5}, "+=.9")
-    .from(".pdone", {autoAlpha:0, y:8, duration:.5}, "+=1.2")
     // 6. the scene gives way to the landing
-    .to(stage, {autoAlpha:0, y:-16, duration:.9}, "+=2.2")
+    .to(stage, {autoAlpha:0, y:-16, duration:.9}, "+=2.4")
     .to(".intro-head", {autoAlpha:0, duration:.5}, "<")
     .to(rest, {autoAlpha:1, duration:.7}, "<.5")
-    .from(".brand-big", {y:16, duration:.8}, "<")
-    .from(".motto", {y:16, autoAlpha:0, duration:.8}, "<.25")
-    .from(".lede", {y:12, autoAlpha:0, duration:.6}, "<.3")
-    .from(".actions", {y:14, autoAlpha:0, duration:.7}, "<.3");
+    .from(".brand-big", {y:16, autoAlpha:0, duration:.8}, "<")
+    .from(".m1", {y:12, autoAlpha:0, duration:.6}, "+=.6")
+    .from(".m2", {y:12, autoAlpha:0, duration:.6}, "+=.5")
+    .from(".m3", {y:12, autoAlpha:0, duration:.6}, "+=.5")
+    .from([".actions", ".replay"], {y:14, autoAlpha:0, duration:.7}, "+=.6");
 
   window.__introTimeline = tl;
   function done(){ sessionStorage.setItem("htn.intro","1"); skip.style.visibility = "hidden"; stage.style.pointerEvents = "none"; }
