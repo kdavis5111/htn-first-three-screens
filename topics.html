@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HeresThe.News — Your topics</title>
-<link rel="stylesheet" href="style.css?v=19">
+<link rel="stylesheet" href="style.css?v=28">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -35,7 +35,7 @@
     <div class="sticky">
       <p class="live" id="live"></p>
       <button class="btn btn-primary" id="continueBtn" type="submit" disabled>Next</button>
-      <button class="btn btn-link" id="allBtn" type="button">Show me everything</button>
+      <button class="btn btn-link" id="allBtn" type="button">No preference — show me everything</button>
     </div>
   </form>
 </div>
@@ -59,15 +59,15 @@ function refresh(){
   btn.disabled = picked.length === 0;
   btn.textContent = picked.length === 0 ? "Pick at least one" : "Show my paper";
   const total = picked.reduce((a,t) => a + t[2], 0);
-  live.innerHTML = picked.length === 0 ? "Your paper: <b>nothing yet</b>"
-    : `Your paper: <b>${picked.map(t => t[1]).join(" · ")}</b> — ${total} stories`;
+  live.innerHTML = picked.length === 0 ? "Pick what you care about. It goes to the top; you still get everything."
+    : `<b>${picked.map(t => t[1]).join(" · ")}</b> first, then everything else`;
 }
 list.addEventListener("change", refresh);
 refresh();
 
 document.getElementById("allBtn").addEventListener("click", () => {
-  list.querySelectorAll("input").forEach(i => i.checked = true); refresh();
-  document.getElementById("topicsForm").requestSubmit();
+  localStorage.setItem("htn.topics", "[]");
+  location.href = "paper.html";
 });
 document.getElementById("topicsForm").addEventListener("submit", e => {
   e.preventDefault();

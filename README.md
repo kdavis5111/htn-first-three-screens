@@ -22,10 +22,10 @@
 | # | Screen | Its one job | Why it earned a slot | Design question it helps answer |
 |---|---|---|---|---|
 | 1 | **Start** | Signal the value and the one action. A short intro plays once: a phone lock screen, a HeresThe.News notification, a zoom into the app, one headline whose facts arrive labeled *verified / reported / disputed* with their sources. It resolves into the wordmark, **"No ads. No bait. Just news."** revealed one line at a time, and a single button, **Read Today's News**. | The live site's landing is the feed itself, so a first-timer never sees what makes it different. This screen shows the mechanism in ten seconds instead of describing it. | Does a first-time visitor understand what the site does and what to tap before reading anything? |
-| 2 | **Today's paper** | Show the product working. The site's real story component, with a real story from the Aug 3 edition open: *Why it matters*, five facts with status chips, and every source named with its lean tag. Ends with **"That's everything for today."** | It is the capability itself, not a picture of it. Every element on it exists on heresthe.news today. | When a reader opens a story, do the labels and named sources read as "this has been checked" without explanation? |
-| 3 | **Your topics** | Let the reader shape the paper. The live site's own words, *"What news do you want to see?"*, a list with line icons, **Next** disabled until at least one pick, *Show me everything* as the escape, and a live strip, *"Your paper: World · Tech — 9 stories"*, that updates as topics are toggled. | The live site has this feature but buries it after the first section; first-timers never find it. Showing it as a step makes the reader's control over the paper discoverable. | Do readers recognise the list as *their* control over the paper, and does the disabled Next read as a constraint rather than a bug? |
+| 2 | **Your topics** | Let the reader shape the paper. The live site's own words, *"What news do you want to see?"*, a list with line icons, **Show my paper** disabled until at least one pick, *No preference, show me everything* as the escape, and a live line, *"World · Tech first, then everything else"*, that updates as topics are toggled. Chosen topics are **prioritised, not filtered**: they go to the top and the rest of the paper still follows. | The live site has this feature but buries it after the first section; first-timers never find it. Showing it as the first step makes the reader's control over the paper discoverable, and prioritising rather than filtering keeps the promise that you still get *all* the news. | Do readers recognise the list as *their* control over the paper, and does the disabled button read as a constraint rather than a bug? |
+| 3 | **Today's paper** | Show the product working. Every category of the Aug 3 edition, with the reader's chosen topics first under *Your topics* and the rest under *Everything else*. The site's real story component is open on one story: *Why it matters*, five facts with status chips, and every source named with its lean tag. Ends with **"That's everything for today."** | It is the capability itself, not a picture of it. Every element on it exists on heresthe.news today, and it shows the effect of the choice made on screen 2. | When a reader opens a story, do the labels and named sources read as "this has been checked" without explanation? And do they notice their topics came first? |
 
-Every screen returns to Start from the masthead (logo, and a back arrow on screens 2 and 3). Three screens is the cap; there is no fourth.
+The flow is Start → Your topics → Today's paper. Every screen returns to Start from the masthead (logo, and a back arrow on screens 2 and 3). Three screens is the cap; there is no fourth.
 
 ## 3. Design question plan
 
@@ -37,7 +37,7 @@ Every screen returns to Start from the masthead (logo, and a back arrow on scree
 | Value | "If this worked the way you wanted, what one or two words describe what you'd get out of it?" | "Trust" or "quick." Not "certainty," which is my word, not theirs. | The status chips and the named sources on Today's paper. If they say "quick" and not "trust," the labels are not landing. |
 | Persona | "How often does this come up for you, and what are you usually doing when it does?" | Every morning, on the phone, in bed or before class, with about five minutes. | The intro's lock-screen notification at 7:00 is aimed at exactly that moment. |
 | Capability | "I'm going to show you this screen for five seconds. (Hide it.) What does this product do?" — the Start screen after the intro | "News without ads." Fewer will say "checked across sources," because that idea lives in the intro, not in the resting landing. | The motto carries the *no ads* claim; the multi-source claim is only in the animation, so it is at risk of being missed. |
-| Capability | "Click around on Today's paper and tell me what the labels mean." | *Verified* and *disputed* will be read correctly. Some will read *reported* as a synonym for verified rather than "one source so far." | The `reported` chip is grey and unexplained on screen 2; the live site explains it in a footnote the mock-up does not carry. |
+| Capability | "Click around on Today's paper and tell me what the labels mean." | *Verified* and *disputed* will be read correctly. Some will read *reported* as a synonym for verified rather than "one source so far." | The `reported` chip is grey and unexplained on screen 3; the live site explains it in a footnote the mock-up does not carry. |
 
 ## 4. Design justification and first read
 
@@ -48,22 +48,23 @@ I opened the live URL on my phone as if I had never seen it.
 **Does every element on the landing earn its place?** Now, yes. The first AI output did not: it had a three-line headline, a lede sentence, a row of three reassurance chips, a footer line about the publish time, and two buttons of near-equal weight. That is *signifier interference* in the deck's terms. Nothing was dominant, so nothing signaled. The resting landing now has four things: wordmark, motto, one button, and a demoted *Replay intro* link.
 
 **What belongs together on each screen, and which Gestalt principle communicates it?**
-- *Proximity*: on Today's paper, the facts sit directly under "The facts" and each source line sits directly under its fact, so fact and evidence read as one unit.
+- *Proximity*: on Today's paper, the facts sit directly under "The facts" and each source line sits directly under its fact, so fact and evidence read as one unit. The reader's chosen categories sit together under one *Your topics* divider.
 - *Similarity*: every status chip has the same shape and type; only colour changes, so colour alone encodes status. On Topics, every selected row shares the same green tint and tick, so "chosen" reads as one state.
 - *Common region*: each story is one card; the lock-screen notification is one card; the topic list is one bordered region.
 - *Continuity*: the progress bar on Topics is a single line, so "step 1 of 2" reads without a label.
 
-**Do screens 2 and 3 stay on mission, and can you return to the landing from everywhere?** Screen 2 is the product, not a decoration around it. Screen 3 is a choice screen, which the assignment warns about; it stays on mission because the choice has a visible effect on the same screen (the "Your paper" strip) and because it is a real feature of the live site rather than an invented settings page. Both screens have a back arrow and a logo link to Start.
+**Do screens 2 and 3 stay on mission, and can you return to the landing from everywhere?** Screen 2 is a choice screen, which the assignment warns about; it stays on mission because it is a real feature of the live site rather than an invented settings page, because the live line shows the effect as you tap, and because the choice is honoured on the very next screen. Screen 3 is the product itself, with the reader's choice visible at the top of it. Both screens have a back arrow and a logo link to Start.
 
 **What did the AI initially get wrong, skip, or oversimplify, and what did I change?**
 1. **Too much copy competing on the landing.** Cut to one motto and one button. *Reason:* interference; the affordance sentence was not dominant.
 2. **An abstract "demo" graphic of grey bars.** It signified nothing; a reader could not tell the bars were stories. Replaced twice, finally with a phone that shows the actual product. *Reason:* clarity, matching the reader's mental model.
 3. **An invented "how much time do you have?" picker.** It looked good and did not reflect how the site works; the site has no time sizing. Removed. *Reason:* a signifier for a capability that does not exist is a false affordance.
-4. **A reading-style picker on screen 3.** A settings page, the failure the assignment names. Removed; screen 3 became the site's real topics flow with a live effect.
-5. **Emoji icons on the topic list.** They read as cheap and inconsistent. Replaced with line icons in one stroke weight. *Reason:* the three screens have to look like one product.
-6. **The wordmark's clay dot was missing.** Restored. Small, but it is the brand.
+4. **A reading-style picker as the third screen.** A settings page, the failure the assignment names. Removed. The topics step became screen 2 and the paper became screen 3, so the last thing a visitor sees is the product honouring their choice.
+5. **Topics filtered the paper.** The first version dropped every category you did not pick. Changed to prioritise instead: chosen categories first, everything else after. *Reason:* the site's promise is that you get all the news; filtering broke the reader's mental model of "a paper."
+6. **Emoji icons on the topic list.** They read as cheap and inconsistent. Replaced with line icons in one stroke weight. *Reason:* the three screens have to look like one product.
+7. **The wordmark's clay dot was missing.** Restored. Small, but it is the brand.
 
-**Which design question motivated each important change?** The landing rewrite came from *"does a first-timer know what to tap before reading?"*: the answer was no while five elements competed. The removal of the time and style pickers came from *"do screens 2 and 3 show the product working?"*: a picker is not the product. The topics live strip came from *"does the disabled Next read as a constraint, and does the reader see the effect of their choice?"*.
+**Which design question motivated each important change?** The landing rewrite came from *"does a first-timer know what to tap before reading?"*: the answer was no while five elements competed. The removal of the time and style pickers came from *"do screens 2 and 3 show the product working?"*: a picker is not the product. The topics live line and the prioritise-not-filter change came from *"does the reader see the effect of their choice, and do they still trust they got everything?"*.
 
 ### Before and after
 
@@ -74,7 +75,7 @@ I opened the live URL on my phone as if I had never seen it.
 | ![before topics](docs/before/topics.png) | ![intro](docs/after/intro-lockscreen.png) |
 | Topics: emoji icons, story counts on every row, helper paragraph, step label. | The intro's first beat: a real phone, a HeresThe.News notification at 7:00. |
 
-Screen 2 did not exist in the first output; the first output had a time-sizing screen instead ([before](docs/before/brief.png)). Screen 2 final: [docs/after/paper.png](docs/after/paper.png). Screen 3 final: [docs/after/topics.png](docs/after/topics.png).
+The paper screen did not exist in the first output; the first output had a time-sizing screen instead ([before](docs/before/brief.png)). Screen 2 final: [docs/after/topics.png](docs/after/topics.png). Screen 3 final: [docs/after/paper.png](docs/after/paper.png).
 
 ---
 
