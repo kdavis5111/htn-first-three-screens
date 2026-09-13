@@ -42,7 +42,8 @@
 
 <script>
 const TOPICS = [["world","World",5],["national","National",5],["politics","Politics",4],["business","Business",3],["technology","Technology",4],["science","Science",6],["health","Health",3],["sports","Sports",5],["weather","Weather",1],["boxoffice","Box Office",4],["pop","Pop Culture",3]];
-const saved = new Set(JSON.parse(localStorage.getItem("htn.topics")||"[]"));
+const q = new URLSearchParams(location.search).get("topics");
+const saved = new Set(q ? q.split(",") : JSON.parse(localStorage.getItem("htn.topics")||"[]"));
 const list = document.getElementById("topicList");
 list.innerHTML = TOPICS.map(([id,name]) => `
   <li><label>

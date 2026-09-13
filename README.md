@@ -1,6 +1,6 @@
 # HeresThe.News — First Three Screens
 
-**Live prototype:** https://kdavis5111.github.io/htn-first-three-screens/ (add `?skip=1` to jump past the intro)
+**Live prototype:** https://kdavis5111.github.io/htn-first-three-screens/ (add `?skip=1` to jump past the intro; `?at=11` pauses the intro at that second)
 **Repo:** https://github.com/kdavis5111/htn-first-three-screens
 **History:** [first commit `d8bd24c`](https://github.com/kdavis5111/htn-first-three-screens/commit/d8bd24c) is the agent's untouched output from [BRIEF.md](BRIEF.md); every change after it is on the `refine-signifiers` branch, merged through [pull request #1](https://github.com/kdavis5111/htn-first-three-screens/pull/1).
 
@@ -72,10 +72,12 @@ I opened the live URL on my phone as if I had never seen it.
 |---|---|
 | ![before](docs/before/index.png) | ![after](docs/after/index.png) |
 | Landing: eyebrow, three-line headline, lede, primary and secondary buttons, three reassurance chips, footer. Nothing dominant. | Landing after the intro: wordmark, motto, one button. The capability is shown by the intro (below), not described. |
-| ![before topics](docs/before/topics.png) | ![intro](docs/after/intro-lockscreen.png) |
-| Topics: emoji icons, story counts on every row, helper paragraph, step label. | The intro's first beat: a real phone, a HeresThe.News notification at 7:00. |
+| ![before topics](docs/before/topics.png) | ![after topics](docs/after/topics.png) |
+| Topics: emoji icons, story counts on every row, helper paragraph, step label, and the choice *filtered* the paper. | Topics: line icons, one live line showing the effect, and the choice *prioritises* the paper instead of filtering it. |
+| ![intro lock screen](docs/after/intro-lockscreen.png) | ![intro app](docs/after/intro-app.png) |
+| The intro's first beat: a phone, a HeresThe.News notification at 7:00. | The intro's last beat: one headline, facts labeled verified / reported / disputed, sources named. |
 
-The paper screen did not exist in the first output; the first output had a time-sizing screen instead ([before](docs/before/brief.png)). Screen 2 final: [docs/after/topics.png](docs/after/topics.png). Screen 3 final: [docs/after/paper.png](docs/after/paper.png).
+The paper screen did not exist in the first output; the first output had a time-sizing screen instead ([before](docs/before/brief.png)). Screen 3 final: [docs/after/paper.png](docs/after/paper.png) (top) and [docs/after/paper-full.png](docs/after/paper-full.png) (whole page).
 
 ---
 

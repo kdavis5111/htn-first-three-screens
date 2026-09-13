@@ -91,7 +91,9 @@
   function done(){ sessionStorage.setItem("htn.intro","1"); skip.style.visibility = "hidden"; stage.style.pointerEvents = "none"; }
   function play(){ skip.style.visibility = "visible"; stage.style.pointerEvents = ""; tl.restart(); }
 
-  if (reduce || seen) { tl.progress(1); done(); } else { play(); }
+  const at = parseFloat(new URLSearchParams(location.search).get("at"));   // ?at=2.5 pauses the intro at that second (for screenshots)
+  if (!isNaN(at)) { skip.style.visibility = "visible"; tl.pause(at); }
+  else if (reduce || seen) { tl.progress(1); done(); } else { play(); }
   skip.addEventListener("click", () => { tl.progress(1); done(); });
   replay.addEventListener("click", play);
 })();

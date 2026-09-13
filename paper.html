@@ -124,7 +124,8 @@
 // Chosen topics go to the top, in the order they were listed; everything else follows.
 (function(){
   const ORDER = ["world","national","politics","business","technology","science","health","sports","weather","boxoffice","pop"];
-  const picked = JSON.parse(localStorage.getItem("htn.topics") || "[]").filter(id => ORDER.includes(id));
+  const q = new URLSearchParams(location.search).get("topics");            // ?topics=science,sports presets the choice (for screenshots)
+  const picked = (q ? q.split(",") : JSON.parse(localStorage.getItem("htn.topics") || "[]")).filter(id => ORDER.includes(id));
   const paper = document.getElementById("paper");
   const byId = Object.fromEntries([...paper.querySelectorAll(".cat-band")].map(s => [s.dataset.category, s]));
   const mine = document.querySelector('[data-divider="mine"]'), rest = document.querySelector('[data-divider="rest"]');
