@@ -58,7 +58,7 @@
   const stage = document.getElementById("stage"), rest = document.getElementById("rest");
   const skip = document.getElementById("skip"), replay = document.getElementById("replay");
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const seen = sessionStorage.getItem("htn.intro") === "1";
+  const seen = sessionStorage.getItem("htn.intro") === "1" || /[?&]skip\b/.test(location.search);
 
   // No GSAP (offline)? Show the landing.
   if (typeof gsap === "undefined") { stage.hidden = true; skip.hidden = true; return; }

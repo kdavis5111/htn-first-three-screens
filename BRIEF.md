@@ -1,3 +1,5 @@
+> **Note added after review (Sept 12).** This is the brief exactly as it was handed to the agent on Sept 9; the first commit on `main` is the agent's untouched output from it. During review the concept changed: the time-sizing capability below turned out not to reflect how HeresThe.News works and was dropped. The final need, persona, capability and value, the final three screens, and the reasons for every change are in [README.md](README.md).
+
 # Brief: HeresThe.News — First Three Screens
 
 ## Product
