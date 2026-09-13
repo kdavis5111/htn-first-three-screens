@@ -3,62 +3,76 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HeresThe.News — Pick your topics</title>
-<link rel="stylesheet" href="style.css">
+<title>HeresThe.News — Your topics</title>
+<link rel="stylesheet" href="style.css?v=19">
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-world" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
+  <symbol id="i-national" viewBox="0 0 24 24"><path d="M3 20h18M4 10h16M12 4l8 5H4z"/><path d="M6 10v10M10 10v10M14 10v10M18 10v10"/></symbol>
+  <symbol id="i-politics" viewBox="0 0 24 24"><path d="M4 12h16v8H4zM9 12V5h6v7"/><path d="M11 8l1.5 1.5L15 6"/></symbol>
+  <symbol id="i-business" viewBox="0 0 24 24"><path d="M3 20h18M4 16l5-5 4 3 7-8"/><path d="M16 6h4v4"/></symbol>
+  <symbol id="i-technology" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/></symbol>
+  <symbol id="i-science" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a1.5 1.5 0 0 0 1.3 2.2h11.4A1.5 1.5 0 0 0 19 18l-5-9V3"/><path d="M8 15h8"/></symbol>
+  <symbol id="i-health" viewBox="0 0 24 24"><path d="M3 12h4l2-5 3 10 2-5h7"/></symbol>
+  <symbol id="i-sports" viewBox="0 0 24 24"><path d="M7 4h10v4a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 3M17 6h3a3 3 0 0 1-3 3M12 13v4M8 21h8M9 17h6"/></symbol>
+  <symbol id="i-weather" viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 0 0 0-8 5.5 5.5 0 0 0-10.5 1.5A3.3 3.3 0 0 0 7 18z"/></symbol>
+  <symbol id="i-boxoffice" viewBox="0 0 24 24"><path d="M3 9h18v11H3zM3 9l2-4h14l2 4M7 5l2 4M12 5l2 4M17 5l2 4"/></symbol>
+  <symbol id="i-pop" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 17l-5.4 2.8 1.1-6.1L3.2 9.4l6.1-.8z"/></symbol>
+</svg>
+
 <div class="app">
   <header class="masthead">
     <a class="back" href="index.html" aria-label="Back to start">&#8592;</a>
-    <a class="brand" href="index.html">HeresThe.<em>News</em></a>
+    <a class="brand" href="index.html">HeresThe<span class="dot">.</span><em>News</em></a>
   </header>
   <div class="progress" aria-label="Step 1 of 2"><span style="width:50%"></span></div>
 
-  <p class="eyebrow">Step 1 of 2</p>
-  <h1>I want to read about…</h1>
-  <p>Pick at least one. Your brief only covers what you choose.</p>
+  <h1>What news do you want to see?</h1>
 
   <form id="topicsForm">
     <ul class="topics" id="topicList"></ul>
-    <p class="muted">Saved on this device. No account. You can change this any morning.</p>
     <div class="sticky">
-      <button class="btn btn-primary" id="continueBtn" type="submit" disabled>Continue</button>
+      <p class="live" id="live"></p>
+      <button class="btn btn-primary" id="continueBtn" type="submit" disabled>Next</button>
+      <button class="btn btn-link" id="allBtn" type="button">Show me everything</button>
     </div>
   </form>
 </div>
 
 <script>
-const TOPICS = [
-  ["world","World","🌍",5],["national","National","🏛️",5],["politics","Politics","🗳️",4],
-  ["business","Business","📈",3],["technology","Technology","💻",4],["science","Science","🔬",6],
-  ["health","Health","🩺",3],["sports","Sports","🏈",5],["weather","Weather","🌦️",1],
-  ["boxoffice","Box Office","🎬",4],["pop","Pop Culture","🎤",3]
-];
+const TOPICS = [["world","World",5],["national","National",5],["politics","Politics",4],["business","Business",3],["technology","Technology",4],["science","Science",6],["health","Health",3],["sports","Sports",5],["weather","Weather",1],["boxoffice","Box Office",4],["pop","Pop Culture",3]];
 const saved = new Set(JSON.parse(localStorage.getItem("htn.topics")||"[]"));
 const list = document.getElementById("topicList");
-list.innerHTML = TOPICS.map(([id,name,ico,n]) => `
+list.innerHTML = TOPICS.map(([id,name]) => `
   <li><label>
     <input type="checkbox" name="topic" value="${id}" ${saved.has(id)?"checked":""}>
-    <span class="ico">${ico}</span>
+    <span class="ico"><svg><use href="#i-${id}"/></svg></span>
     <span class="name">${name}</span>
-    <span class="count">${n} ${n===1?"story":"stories"} today</span>
     <span class="tick">✓</span>
   </label></li>`).join("");
 
 const btn = document.getElementById("continueBtn");
+const live = document.getElementById("live");
 function refresh(){
-  const n = list.querySelectorAll("input:checked").length;
-  btn.disabled = n === 0;
-  btn.textContent = n === 0 ? "Pick at least one topic" : `Continue with ${n} ${n===1?"topic":"topics"}`;
+  const picked = [...list.querySelectorAll("input:checked")].map(i => TOPICS.find(t => t[0] === i.value));
+  btn.disabled = picked.length === 0;
+  btn.textContent = picked.length === 0 ? "Pick at least one" : "Show my paper";
+  const total = picked.reduce((a,t) => a + t[2], 0);
+  live.innerHTML = picked.length === 0 ? "Your paper: <b>nothing yet</b>"
+    : `Your paper: <b>${picked.map(t => t[1]).join(" · ")}</b> — ${total} stories`;
 }
 list.addEventListener("change", refresh);
 refresh();
 
+document.getElementById("allBtn").addEventListener("click", () => {
+  list.querySelectorAll("input").forEach(i => i.checked = true); refresh();
+  document.getElementById("topicsForm").requestSubmit();
+});
 document.getElementById("topicsForm").addEventListener("submit", e => {
   e.preventDefault();
-  const chosen = [...list.querySelectorAll("input:checked")].map(i => i.value);
-  localStorage.setItem("htn.topics", JSON.stringify(chosen));
-  location.href = "brief.html";
+  localStorage.setItem("htn.topics", JSON.stringify([...list.querySelectorAll("input:checked")].map(i => i.value)));
+  location.href = "paper.html";
 });
 </script>
 </body>
