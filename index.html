@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HeresThe.News</title>
-<link rel="stylesheet" href="style.css?v=28">
+<link rel="stylesheet" href="style.css?v=29">
 </head>
 <body>
 <div class="app landing">
@@ -43,8 +43,10 @@
 
   <!-- The landing itself: what stays on screen -->
   <main class="rest" id="rest">
-    <p class="brand-big">HeresThe<span class="dot">.</span><em>News</em></p>
-    <h1 class="motto"><span class="m1">No ads.</span> <span class="m2">No bait.</span><br><span class="m3">Just news.</span></h1>
+    <div class="swap">
+      <h1 class="motto"><span class="m1">No ads.</span> <span class="m2">No bait.</span> <span class="m3">Just news.</span></h1>
+      <p class="brand-big">HeresThe<span class="dot">.</span><em>News</em></p>
+    </div>
     <div class="actions">
       <a class="btn btn-primary" href="topics.html">Read Today's News</a>
     </div>
@@ -79,12 +81,15 @@
     // 6. the scene gives way to the landing
     .to(stage, {autoAlpha:0, y:-16, duration:.9}, "+=2.4")
     .to(".intro-head", {autoAlpha:0, duration:.5}, "<")
-    .to(rest, {autoAlpha:1, duration:.7}, "<.5")
-    .from(".brand-big", {y:16, autoAlpha:0, duration:.8}, "<")
-    .from(".m1", {y:12, autoAlpha:0, duration:.6}, "+=.6")
-    .from(".m2", {y:12, autoAlpha:0, duration:.6}, "+=.5")
-    .from(".m3", {y:12, autoAlpha:0, duration:.6}, "+=.5")
-    .from([".actions", ".replay"], {y:14, autoAlpha:0, duration:.7}, "+=.6");
+    .to(rest, {autoAlpha:1, duration:.4}, "<.5")
+    // the motto, one phrase at a time, left to right
+    .from(".m1", {y:12, autoAlpha:0, duration:.5}, "+=.2")
+    .from(".m2", {y:12, autoAlpha:0, duration:.5}, "+=.45")
+    .from(".m3", {y:12, autoAlpha:0, duration:.5}, "+=.45")
+    // then the wordmark takes its place
+    .to(".motto", {autoAlpha:0, y:-10, duration:.5}, "+=1.1")
+    .from(".brand-big", {y:12, autoAlpha:0, duration:.7}, "-=.15")
+    .from([".actions", ".replay"], {y:14, autoAlpha:0, duration:.6}, "+=.4");
 
   tl.timeScale(1.5);
   window.__introTimeline = tl;
