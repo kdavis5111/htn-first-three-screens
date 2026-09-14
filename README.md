@@ -27,6 +27,13 @@
 
 The flow is Start → Your topics → Today's paper. Every screen returns to Start from the masthead (logo, and a back arrow on screens 2 and 3). Three screens is the cap; there is no fourth.
 
+### The three screens, final
+
+| Screen 1 — Start | Screen 2 — Your topics | Screen 3 — Today's paper |
+|---|---|---|
+| ![Screen 1: Start](docs/after/index.png) | ![Screen 2: Your topics](docs/after/topics.png) | ![Screen 3: Today's paper](docs/after/paper.png) |
+| The moment the intro lands on the motto. It then resolves to the wordmark and the *Read Today's News* button ([resting state](docs/after/landing-rest.png)). | Science and Sports picked; the line under the list shows the effect before the reader commits. | Chosen categories first under *Your topics*, the rest under *Everything else*; the wildfire story open with labeled facts and named sources ([whole page](docs/after/paper-full.png)). |
+
 ## 3. Design question plan
 
 *Questions and predictions only; no feedback has been collected yet.*
@@ -68,16 +75,18 @@ I opened the live URL on my phone as if I had never seen it.
 
 ### Before and after
 
-| First AI output ([commit `d8bd24c`](https://github.com/kdavis5111/htn-first-three-screens/commit/d8bd24c)) | Final |
-|---|---|
-| ![before](docs/before/index.png) | ![after](docs/after/index.png) |
-| Landing: eyebrow, three-line headline, lede, primary and secondary buttons, three reassurance chips, footer. Nothing dominant. | Landing after the intro: the wordmark and one button. The motto, *No ads. No bait. Just news.*, appears one phrase at a time just before the wordmark replaces it ([frame](docs/after/intro-motto.png)). |
-| ![before topics](docs/before/topics.png) | ![after topics](docs/after/topics.png) |
-| Topics: emoji icons, story counts on every row, helper paragraph, step label, and the choice *filtered* the paper. | Topics: line icons, one live line showing the effect, and the choice *prioritises* the paper instead of filtering it. |
-| ![intro lock screen](docs/after/intro-lockscreen.png) | ![intro app](docs/after/intro-app.png) |
-| The intro's first beat: a phone, a HeresThe.News notification at 7:00. | The intro's last beat: one headline, facts labeled verified / reported / disputed, sources named. |
+| | First AI output ([commit `d8bd24c`](https://github.com/kdavis5111/htn-first-three-screens/commit/d8bd24c)) | Final |
+|---|---|---|
+| **Screen 1 — Start** | ![Screen 1 before](docs/before/index.png) | ![Screen 1 after](docs/after/index.png) |
+| | Eyebrow, three-line headline, lede, primary and secondary buttons, three reassurance chips, footer. Nothing dominant. | The intro ends on *No ads. No bait. Just news.*, one phrase at a time; the wordmark then replaces it and one button appears ([resting state](docs/after/landing-rest.png)). |
+| **Screen 2 — Your topics** | ![Screen 2 before](docs/before/topics.png) | ![Screen 2 after](docs/after/topics.png) |
+| | Emoji icons, story counts on every row, helper paragraph, step label, and the choice *filtered* the paper. | Line icons, one live line showing the effect, and the choice *prioritises* the paper instead of filtering it. |
+| **Screen 3 — Today's paper** | ![Screen 3 before](docs/before/brief.png) | ![Screen 3 after](docs/after/paper.png) |
+| | The first output had a time-sizing picker here, a capability the site does not have. | The paper itself: chosen categories first, a real story open with labeled facts and named sources. |
+| **Screen 1, inside the intro** | ![intro lock screen](docs/after/intro-lockscreen.png) | ![intro app](docs/after/intro-app.png) |
+| | First beat: a phone, a HeresThe.News notification at 7:00. | Last beat before the motto: one headline, facts labeled verified / reported / disputed, sources named. |
 
-The paper screen did not exist in the first output; the first output had a time-sizing screen instead ([before](docs/before/brief.png)). Screen 3 final: [docs/after/paper.png](docs/after/paper.png) (top) and [docs/after/paper-full.png](docs/after/paper-full.png) (whole page).
+
 
 ---
 
