@@ -13,9 +13,9 @@
 | | |
 |---|---|
 | **Need** | Every morning, a phone reader who wants to know what happened has to scroll past ads, pop-ups and slanted headlines with no sense of when they are done, so they either skim without trusting anything or give up. |
-| **Persona** | Reads news once a day, in the morning, on a phone, in a five-to-ten-minute window. Has quit at least one news app because it never ended. |
+| **Persona** | Reads news once a day, in the morning, on a phone, in a five-to-ten-minute window. Has quit at least one news app because of constant notifications, tons of ads, being "forced" to subscribe, and intense bias. |
 | **Capability** | Read today's news with every fact labeled by how well it is confirmed and every source named. |
-| **Value** | **Certainty.** You know what actually happened and how sure to be about each piece of it, and then you are done. |
+| **Value** | **Certainty.** You know what actually happened and how sure to be about each part of it, and then you are done for the day. 1 report each morning, no need to keep checking your phone. |
 
 ## 2. The three screens
 
