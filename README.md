@@ -29,10 +29,12 @@ The flow is Start → Your topics → Today's paper. Every screen returns to Sta
 
 ### The three screens, final
 
-| Screen 1 — Start | Screen 2 — Your topics | Screen 3 — Today's paper |
-|---|---|---|
-| ![Screen 1: Start](docs/after/index.png) | ![Screen 2: Your topics](docs/after/topics.png) | ![Screen 3: Today's paper](docs/after/paper.png) |
-| The moment the intro lands on the motto. It then resolves to the wordmark and the *Read Today's News* button ([resting state](docs/after/landing-rest.png)). | Science and Sports picked; the line under the list shows the effect before the reader commits. | Chosen categories first under *Your topics*, the rest under *Everything else*; the wildfire story open with labeled facts and named sources ([whole page](docs/after/paper-full.png)). |
+Screen 1 is one page with an intro that plays once, so it is shown as two frames: where it starts and where it lands.
+
+| Screen 1 — Start, first beat | Screen 1 — Start, last beat | Screen 2 — Your topics | Screen 3 — Today's paper |
+|---|---|---|---|
+| ![Screen 1, first beat: the phone and the notification](docs/after/intro-lockscreen.png) | ![Screen 1, last beat: the motto](docs/after/index.png) | ![Screen 2: Your topics](docs/after/topics.png) | ![Screen 3: Today's paper](docs/after/paper.png) |
+| A phone at 7:00 with a HeresThe.News notification. Tapping it opens the app. | The intro lands on *No ads. No bait. Just news.*, then the wordmark and the *Read Today's News* button take its place ([resting state](docs/after/landing-rest.png)). | Science and Sports picked; the line under the list shows the effect before the reader commits. | Chosen categories first under *Your topics*, the rest under *Everything else*; the wildfire story open with labeled facts and named sources ([whole page](docs/after/paper-full.png)). |
 
 ## 3. Design question plan
 
